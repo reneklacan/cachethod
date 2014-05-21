@@ -31,7 +31,9 @@ class ActiveRecord::Base
       args = @methods_to_cache.delete(name)
 
       define_method "#{name}_cached" do
-        Rails.cache.fetch("user#{id}.#{name}", *args) do
+        cache_key = "cachethod.#{self.class.to_s.underscore}-#{id}.#{name}"
+
+        Rails.cache.fetch(cache_key, *args) do
           send("#{name}!")
         end
       end
