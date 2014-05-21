@@ -1,10 +1,12 @@
 # Cachethod
 
-With this Rails plugin you can cache your model methods and speed up
+With this Rails plugin you can **cache** your **model methods** and speed up
 obtaining results. This can be very useful when you are doing some
 expensive operations (eg. reading from file or doing some http request)
 in your model methods and you don't need fresh results every time you
 invoke the method or results just don't change so frequently.
+
+**Works out of box with Rails 3 and Rails 4.**
 
 ## About
 
