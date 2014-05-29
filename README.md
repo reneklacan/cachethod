@@ -30,7 +30,9 @@ bundle install
 
 ## Usage
 
-You can choose one of following methods:
+First step is including **Cachethod** module to your class.
+
+Next you can choose one of following methods:
 
 ```ruby
 cache_method :method_name, expires_in: 1.minutes
@@ -47,6 +49,8 @@ Just put it in your controller:
 
 ```ruby
 class User < ActiveRecord::Base
+  include Cachethod
+
   cache_method :some_io_method, expires_in: 10.minutes
 
   def some_io_method
@@ -75,7 +79,9 @@ user.some_io_method!
 For example it translates following code:
 
 ```ruby
-class Stormtrooper < ActiveRecord::Base
+class Stormtrooper
+  include Cachethod
+
   cache_methods [:some_io_method, :another_io_method], expires_in: 10.minutes
 
   def some_io_method
@@ -105,3 +111,7 @@ class Stormtrooper < ActiveRecord::Base
   end
 end
 ```
+
+## License
+
+This library is distributed under the Beerware license.
