@@ -1,35 +1,31 @@
-class ActiveRecord::Base
+class Object
   class << self
     alias_method :method_added_original, :method_added
 
-    def cache_method name, *args
+    def cache_method names, *args
       @methods_to_cache ||= {}
 
-      if name.is_a?(String) || name.is_a?(Symbol)
-        @methods_to_cache[name.to_sym] = args
-      elsif method_name.is_a?(Array)
-        cache_methods(name, *args)
-      else
-        raise Exception.new('Invalid first argument for cachethod method!')
+      [*names].each do |name|
+        if instance_methods.include?(name.to_sym)
+          cache_method_create(name, *args)
+        else
+          @methods_to_cache[name.to_sym] = args
+        end
       end
     end
 
-    def cache_methods names, *args
-      @methods_to_cache ||= {}
-
-      names.each do |name|
-        @methods_to_cache[name.to_sym] = args
-      end
-    end
-
+    alias_method :cache_methods, :cache_method
     alias_method :cachethod, :cache_method
     alias_method :cachethods, :cache_method
 
     def method_added name
+      method_added_original(name)
       return if @methods_to_cache.nil? || @methods_to_cache[name].nil?
-
       args = @methods_to_cache.delete(name)
+      cache_method_create(name, *args)
+    end
 
+    def cache_method_create name, *args
       define_method "#{name}_cached" do
         cache_key = "cachethod.#{self.class.to_s.underscore}-#{id}.#{name}"
 

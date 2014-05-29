@@ -1,1 +1,1 @@
-require 'cachethod/active_record_base_ext'
+require 'cachethod/object_ext'
