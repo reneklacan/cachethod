@@ -19,7 +19,7 @@ will be reflected also on Cachethod methods.
 In Gemfile
 
 ```ruby
-gem 'cachethod'
+gem 'cachethod', '~> 0.1.1'
 ```
 
 Then run
@@ -31,6 +31,14 @@ bundle install
 ## Usage
 
 First step is including **Cachethod** module to your class.
+
+```ruby
+class User < ActiveRecord::Base
+  include Cachethod
+
+  ...
+end
+```
 
 Next you can choose one of following methods:
 
@@ -53,7 +61,7 @@ class User < ActiveRecord::Base
 
   cache_method :some_io_method, expires_in: 10.minutes
 
-  def some_io_method
+  def some_io_method arg1
     ...
   end
 end
@@ -63,10 +71,15 @@ Then invoke cached method multiple times in the usual way and you will
 see the difference:
 
 ```ruby
-user.some_io_method
-user.some_io_method
-user.some_io_method
+user.some_io_method(2) # this will take a long time
+user.some_io_method(2) # you get cached result instantly
+user.some_io_method(3) # this will take a long time again
+user.some_io_method(3) # you get cached result instantly
+user.some_io_method(2) # you get cached result instantly
 ```
+
+Note that Cachethod takes method arguments into the account and when you change
+arguments it will need to cache method result also.
 
 If you want to access uncached version of your method then you can do:
 
