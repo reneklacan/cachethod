@@ -31,7 +31,7 @@ module Cachethod
       define_method "#{name}_cached" do
         cache_key = "cachethod.#{self.class.to_s.underscore}."
         cache_key += "#{hash}.#{name}."
-        cache_key += args.map{|a| a.hash}.reduce(:^).to_s
+        cache_key += args.hash.to_s
 
         Rails.cache.fetch(cache_key, *args) do
           send("#{name}!")

@@ -19,7 +19,7 @@ will be reflected also on Cachethod methods.
 In Gemfile
 
 ```ruby
-gem 'cachethod', '~> 0.1.1'
+gem 'cachethod', '~> 0.1.2'
 ```
 
 Then run
@@ -111,13 +111,13 @@ into the equivalent of:
 
 ```ruby
 class Stormtrooper < ActiveRecord::Base
-  def some_io_method
+  def some_io_method *args
     Rails.cache.fetch(:some_key, expires_in: 10.minutes) do
       ...
     end
   end
 
-  def another_io_method
+  def another_io_method *args
     Rails.cache.fetch(:another_key, expires_in: 10.minutes) do
       ...
     end
