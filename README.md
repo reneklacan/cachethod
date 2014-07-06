@@ -87,6 +87,22 @@ If you want to access uncached version of your method then you can do:
 user.some_io_method!
 ```
 
+## Caching class methods
+
+```ruby
+class Apple < ActiveRecord::Base
+  class << self
+    include Cachethod
+
+    def kinds
+      ...
+    end
+  end
+
+  cache_class_method :kinds, expires_in: 10.minutes
+end
+```
+
 ## Result
 
 For example it translates following code:
