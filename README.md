@@ -19,7 +19,7 @@ will be reflected also on Cachethod methods.
 In Gemfile
 
 ```ruby
-gem 'cachethod', '~> 0.1.2'
+gem 'cachethod', '~> 0.2.0'
 ```
 
 Then run
