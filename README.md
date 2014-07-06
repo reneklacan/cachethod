@@ -91,9 +91,9 @@ user.some_io_method!
 
 ```ruby
 class Apple < ActiveRecord::Base
-  class << self
-    include Cachethod
+  include Cachethod
 
+  class << self
     def kinds
       ...
     end
